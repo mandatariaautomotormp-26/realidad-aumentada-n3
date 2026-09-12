@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Realidad Aumentada N3</title>
+
+    <!-- A-FRAME -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
+    <!-- MIND-AR -->
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+    <!-- NUESTRO CSS -->
+    <link
+        rel="stylesheet"
+        href="vista/estilo/estilo.css"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- EXPERIENCIA DE REALIDAD AUMENTADA -->
+
+    <a-scene
+        mindar-image="
+            imageTargetSrc: ./targets.mind;
+            autoStart: false;
+        "
+
+        color-space="sRGB"
+
+        renderer="
+            colorManagement: true;
+            physicallyCorrectLights;
+        "
+
+        vr-mode-ui="enabled: false"
+
+        device-orientation-permission-ui="enabled: false"
+
+        embedded
+    >
+
+
+        <!-- CÁMARA -->
+
+        <a-camera
+            position="0 0 0"
+            look-controls="enabled: false"
+        >
+        </a-camera>
+
+
+        <!-- IMAGEN OBJETIVO -->
+
+        <a-entity
+            id="objetivo"
+            mindar-image-target="targetIndex: 0"
+        >
+
+
+            <!-- MENSAJE QUE APARECERÁ SOBRE LA IMAGEN -->
+
+            <a-plane
+                position="0 0 0.01"
+                width="1"
+                height="0.55"
+                color="#111827"
+                opacity="0.90"
+            >
+            </a-plane>
+
+
+            <a-text
+                value="¡IMAGEN RECONOCIDA!"
+                align="center"
+                color="#ffffff"
+                width="1.5"
+                position="0 0.10 0.02"
+            >
+            </a-text>
+
+
+            <a-text
+                value="Realidad Aumentada N3"
+                align="center"
+                color="#ffffff"
+                width="1.2"
+                position="0 -0.08 0.02"
+            >
+            </a-text>
+
+
+        </a-entity>
+
+
+    </a-scene>
+
+
+    <!-- BOTÓN PARA INICIAR -->
+
+    <div id="pantalla-inicio">
+
+        <div id="caja-inicio">
+
+            <h1>Realidad Aumentada</h1>
+
+            <p>
+                Presioná el botón y apuntá la cámara
+                hacia la imagen.
+            </p>
+
+            <button id="iniciar">
+                INICIAR
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- NUESTRO JAVASCRIPT -->
+
+    <script src="operadores/script.js"></script>
+
+
+</body>
+
+</html>
