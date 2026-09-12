@@ -2,30 +2,41 @@
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sistemas y Organizaciones - Realidad Aumentada</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <!-- ================================= -->
+    <title>
+        Sistemas y Organizaciones - Realidad Aumentada
+    </title>
+
+
+    <!-- ========================================= -->
     <!-- A-FRAME -->
-    <!-- ================================= -->
+    <!-- ========================================= -->
 
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
 
-    <!-- ================================= -->
+    <!-- ========================================= -->
     <!-- MIND-AR -->
-    <!-- ================================= -->
+    <!-- ========================================= -->
 
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
 
-    <!-- ================================= -->
-    <!-- NUESTRO CSS -->
-    <!-- ================================= -->
+    <!-- ========================================= -->
+    <!-- CSS -->
+    <!-- ========================================= -->
 
-    <link rel="stylesheet" href="vista/estilo/estilo.css">
+    <link
+        rel="stylesheet"
+        href="vista/estilo/estilo.css"
+    >
 
 </head>
 
@@ -33,18 +44,18 @@
 <body>
 
 
-    <!-- ================================= -->
+    <!-- ========================================= -->
     <!-- MENSAJE DE ESTADO -->
-    <!-- ================================= -->
+    <!-- ========================================= -->
 
     <div id="mensaje">
         Preparando realidad aumentada...
     </div>
 
 
-    <!-- ================================= -->
+    <!-- ========================================= -->
     <!-- PANTALLA INICIAL -->
-    <!-- ================================= -->
+    <!-- ========================================= -->
 
     <div id="inicio">
 
@@ -59,18 +70,22 @@
                 <strong>Sistemas y Organizaciones</strong>.
             </p>
 
-           <button id="iniciar" onclick="iniciarAR()">
-            INICIAR
-           </button>
+            <button
+                id="iniciar"
+                type="button"
+                onclick="iniciarAR()"
+            >
+                INICIAR
+            </button>
 
         </div>
 
     </div>
 
 
-    <!-- ================================= -->
+    <!-- ========================================= -->
     <!-- ESCENA DE REALIDAD AUMENTADA -->
-    <!-- ================================= -->
+    <!-- ========================================= -->
 
     <a-scene
         id="escena-ar"
@@ -95,35 +110,38 @@
     >
 
 
-        <!-- ================================= -->
+        <!-- ========================================= -->
         <!-- CÁMARA -->
-        <!-- ================================= -->
+        <!-- ========================================= -->
 
         <a-camera
             position="0 0 0"
-            look-controls="enabled: false">
+            look-controls="enabled: false"
+        >
         </a-camera>
 
 
-        <!-- ================================= -->
+        <!-- ========================================= -->
         <!-- ILUMINACIÓN -->
-        <!-- ================================= -->
+        <!-- ========================================= -->
 
         <a-light
             type="ambient"
-            intensity="1.5">
+            intensity="1.5"
+        >
         </a-light>
 
         <a-light
             type="directional"
             intensity="2"
-            position="1 2 2">
+            position="1 2 2"
+        >
         </a-light>
 
 
-        <!-- ================================= -->
+        <!-- ========================================= -->
         <!-- IMAGEN OBJETIVO -->
-        <!-- ================================= -->
+        <!-- ========================================= -->
 
         <a-entity
             id="objetivo"
@@ -343,15 +361,408 @@
 
         </a-entity>
 
-
     </a-scene>
 
 
-    <!-- ================================= -->
-    <!-- JAVASCRIPT -->
-    <!-- ================================= -->
+    <!-- ========================================= -->
+    <!-- CONTROL DE REALIDAD AUMENTADA -->
+    <!-- ========================================= -->
 
-    <script src="operadores/script.js?v=5"></script>
+    <script>
+
+        /*
+         * ========================================
+         * VARIABLES
+         * ========================================
+         */
+
+        let escenaAR = null;
+        let sistemaAR = null;
+
+
+        /*
+         * ========================================
+         * CUANDO CARGA LA PÁGINA
+         * ========================================
+         */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                console.log(
+                    "AR: página cargada"
+                );
+
+
+                escenaAR =
+                    document.getElementById(
+                        "escena-ar"
+                    );
+
+
+                /*
+                 * Esperamos a que A-Frame
+                 * termine de cargar
+                 */
+
+                escenaAR.addEventListener(
+                    "loaded",
+                    function () {
+
+                        console.log(
+                            "AR: escena A-Frame cargada"
+                        );
+
+
+                        sistemaAR =
+                            escenaAR.systems[
+                                "mindar-image-system"
+                            ];
+
+
+                        console.log(
+                            "AR: MindAR:",
+                            sistemaAR
+                        );
+
+                    }
+                );
+
+
+                /*
+                 * =================================
+                 * MINDAR LISTO
+                 * =================================
+                 */
+
+                escenaAR.addEventListener(
+                    "arReady",
+                    function () {
+
+                        console.log(
+                            "AR: CÁMARA INICIADA"
+                        );
+
+
+                        document.getElementById(
+                            "inicio"
+                        ).style.display = "none";
+
+
+                        const mensaje =
+                            document.getElementById(
+                                "mensaje"
+                            );
+
+
+                        mensaje.style.display =
+                            "block";
+
+
+                        mensaje.innerText =
+                            "✓ Cámara activa · Buscando la imagen...";
+
+                    }
+                );
+
+
+                /*
+                 * =================================
+                 * ERROR
+                 * =================================
+                 */
+
+                escenaAR.addEventListener(
+                    "arError",
+                    function (evento) {
+
+                        console.error(
+                            "AR: ERROR",
+                            evento
+                        );
+
+
+                        document.getElementById(
+                            "mensaje"
+                        ).innerText =
+                            "❌ No se pudo iniciar la cámara.";
+
+                    }
+                );
+
+
+                /*
+                 * =================================
+                 * IMAGEN ENCONTRADA
+                 * =================================
+                 */
+
+                const objetivo =
+                    document.getElementById(
+                        "objetivo"
+                    );
+
+
+                objetivo.addEventListener(
+                    "targetFound",
+                    function () {
+
+                        console.log(
+                            "AR: IMAGEN RECONOCIDA"
+                        );
+
+
+                        document.getElementById(
+                            "mensaje"
+                        ).innerText =
+                            "🎉 ¡IMAGEN RECONOCIDA!";
+
+                    }
+                );
+
+
+                /*
+                 * =================================
+                 * IMAGEN PERDIDA
+                 * =================================
+                 */
+
+                objetivo.addEventListener(
+                    "targetLost",
+                    function () {
+
+                        console.log(
+                            "AR: IMAGEN PERDIDA"
+                        );
+
+
+                        document.getElementById(
+                            "mensaje"
+                        ).innerText =
+                            "Buscando la imagen...";
+
+                    }
+                );
+
+            }
+        );
+
+
+        /*
+         * ========================================
+         * BOTÓN INICIAR
+         * ========================================
+         *
+         * Esta función está directamente
+         * conectada al botón mediante:
+         *
+         * onclick="iniciarAR()"
+         *
+         * Así no dependemos de otro archivo JS.
+         *
+         */
+
+        function iniciarAR() {
+
+            console.log(
+                "AR: BOTÓN INICIAR PRESIONADO"
+            );
+
+
+            const mensaje =
+                document.getElementById(
+                    "mensaje"
+                );
+
+
+            mensaje.style.display =
+                "block";
+
+
+            mensaje.innerText =
+                "Iniciando cámara...";
+
+
+            /*
+             * Intentamos obtener MindAR
+             * directamente de la escena.
+             */
+
+            const escena =
+                document.getElementById(
+                    "escena-ar"
+                );
+
+
+            if (!escena) {
+
+                mensaje.innerText =
+                    "❌ No se encontró la escena AR.";
+
+                return;
+
+            }
+
+
+            sistemaAR =
+                escena.systems[
+                    "mindar-image-system"
+                ];
+
+
+            /*
+             * Si todavía no cargó,
+             * esperamos un momento.
+             */
+
+            if (!sistemaAR) {
+
+                console.log(
+                    "AR: esperando MindAR..."
+                );
+
+
+                mensaje.innerText =
+                    "Cargando realidad aumentada...";
+
+
+                let intentos = 0;
+
+
+                const esperarMindAR =
+                    setInterval(
+                        function () {
+
+                            intentos++;
+
+
+                            sistemaAR =
+                                escena.systems[
+                                    "mindar-image-system"
+                                ];
+
+
+                            if (sistemaAR) {
+
+                                clearInterval(
+                                    esperarMindAR
+                                );
+
+
+                                console.log(
+                                    "AR: MindAR encontrado"
+                                );
+
+
+                                mensaje.innerText =
+                                    "Iniciando cámara...";
+
+
+                                iniciarSistemaAR();
+
+                            }
+
+
+                            /*
+                             * Después de 10 segundos
+                             * dejamos de esperar.
+                             */
+
+                            if (intentos >= 20) {
+
+                                clearInterval(
+                                    esperarMindAR
+                                );
+
+
+                                mensaje.innerText =
+                                    "❌ No se pudo cargar MindAR.";
+
+                            }
+
+                        },
+                        500
+                    );
+
+
+                return;
+
+            }
+
+
+            iniciarSistemaAR();
+
+        }
+
+
+        /*
+         * ========================================
+         * INICIAR MINDAR
+         * ========================================
+         */
+
+        function iniciarSistemaAR() {
+
+            try {
+
+                console.log(
+                    "AR: ejecutando start()"
+                );
+
+
+                const resultado =
+                    sistemaAR.start();
+
+
+                /*
+                 * Algunas versiones devuelven
+                 * una Promise.
+                 */
+
+                if (
+                    resultado &&
+                    typeof resultado.catch === "function"
+                ) {
+
+                    resultado.catch(
+                        function (error) {
+
+                            console.error(
+                                "AR: error al iniciar",
+                                error
+                            );
+
+
+                            document.getElementById(
+                                "mensaje"
+                            ).innerText =
+                                "❌ No se pudo iniciar la cámara.";
+
+                        }
+                    );
+
+                }
+
+            }
+            catch (error) {
+
+                console.error(
+                    "AR: excepción",
+                    error
+                );
+
+
+                document.getElementById(
+                    "mensaje"
+                ).innerText =
+                    "❌ Error al iniciar la cámara.";
+
+            }
+
+        }
+
+    </script>
 
 
 </body>
