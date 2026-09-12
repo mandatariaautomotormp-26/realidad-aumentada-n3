@@ -2,13 +2,10 @@
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Realidad Aumentada N3</title>
 
@@ -18,121 +15,117 @@
     <!-- MIND-AR -->
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
-    <!-- NUESTRO CSS -->
-    <link
-        rel="stylesheet"
-        href="vista/estilo/estilo.css"
-    >
+    <style>
+        html,
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
 
+        a-scene {
+            width: 100%;
+            height: 100%;
+        }
+
+        #mensaje {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+
+            background: rgba(0, 0, 0, 0.75);
+            color: white;
+
+            padding: 15px 20px;
+            border-radius: 12px;
+
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+    </style>
 </head>
-
 
 <body>
 
-    <!-- EXPERIENCIA DE REALIDAD AUMENTADA -->
+    <div id="mensaje">
+        Preparando realidad aumentada...
+    </div>
 
     <a-scene
         mindar-image="
             imageTargetSrc: ./targets.mind;
-            autoStart: false;
+            autoStart: true;
         "
-
         color-space="sRGB"
-
-        renderer="
-            colorManagement: true;
-            physicallyCorrectLights;
-        "
-
+        renderer="colorManagement: true"
         vr-mode-ui="enabled: false"
-
         device-orientation-permission-ui="enabled: false"
-
         embedded
     >
 
-
-        <!-- CÁMARA -->
-
         <a-camera
             position="0 0 0"
-            look-controls="enabled: false"
-        >
+            look-controls="enabled: false">
         </a-camera>
 
-
-        <!-- IMAGEN OBJETIVO -->
-
         <a-entity
-            id="objetivo"
-            mindar-image-target="targetIndex: 0"
-        >
-
-
-            <!-- MENSAJE QUE APARECERÁ SOBRE LA IMAGEN -->
+            mindar-image-target="targetIndex: 0">
 
             <a-plane
                 position="0 0 0.01"
                 width="1"
                 height="0.55"
                 color="#111827"
-                opacity="0.90"
-            >
+                opacity="0.90">
             </a-plane>
-
 
             <a-text
                 value="¡IMAGEN RECONOCIDA!"
                 align="center"
                 color="#ffffff"
                 width="1.5"
-                position="0 0.10 0.02"
-            >
+                position="0 0.10 0.02">
             </a-text>
-
 
             <a-text
                 value="Realidad Aumentada N3"
                 align="center"
                 color="#ffffff"
                 width="1.2"
-                position="0 -0.08 0.02"
-            >
+                position="0 -0.08 0.02">
             </a-text>
-
 
         </a-entity>
 
-
     </a-scene>
 
+    <script>
+        const escena = document.querySelector("a-scene");
+        const mensaje = document.getElementById("mensaje");
 
-    <!-- BOTÓN PARA INICIAR -->
+        escena.addEventListener("arReady", function () {
+            mensaje.innerText =
+                "✓ Cámara activa. Apuntá hacia la imagen.";
+        });
 
-    <div id="pantalla-inicio">
+        escena.addEventListener("arError", function () {
+            mensaje.innerText =
+                "❌ No se pudo iniciar la cámara.";
+        });
 
-        <div id="caja-inicio">
+        escena.addEventListener("targetFound", function () {
+            mensaje.innerText =
+                "🎉 ¡IMAGEN RECONOCIDA!";
+        });
 
-            <h1>Realidad Aumentada</h1>
-
-            <p>
-                Presioná el botón y apuntá la cámara
-                hacia la imagen.
-            </p>
-
-            <button id="iniciar">
-                INICIAR
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- NUESTRO JAVASCRIPT -->
-
-    <script src="operadores/script.js"></script>
-
+        escena.addEventListener("targetLost", function () {
+            mensaje.innerText =
+                "Buscando la imagen...";
+        });
+    </script>
 
 </body>
 
