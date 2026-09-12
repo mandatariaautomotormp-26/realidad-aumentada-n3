@@ -1,52 +1,224 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    const botonIniciar = document.getElementById("iniciar");
-    const pantallaInicio = document.getElementById("pantalla-inicio");
-
     const escena = document.querySelector("a-scene");
 
-    // Cuando MindAR está listo
-    escena.addEventListener("arReady", function () {
+    const botonIniciar =
+        document.getElementById("iniciar");
 
-        console.log("MindAR está listo");
+    const pantallaInicio =
+        document.getElementById("inicio");
 
-    });
+    const mensaje =
+        document.getElementById("mensaje");
 
-    // Botón INICIAR
-    botonIniciar.addEventListener("click", function () {
+    const objetivo =
+        document.getElementById("objetivo");
 
-        console.log("Iniciando realidad aumentada...");
 
-        // Ocultamos la pantalla inicial
-        pantallaInicio.style.display = "none";
+    let sistemaAR = null;
 
-        // Iniciamos MindAR
-        const sistemaAR = escena.systems["mindar-image-system"];
+
+    /*
+    ==========================================
+    CUANDO A-FRAME TERMINÓ DE CARGAR
+    ==========================================
+    */
+
+    escena.addEventListener("loaded", function () {
+
+        console.log("A-Frame cargado.");
+
+        sistemaAR =
+            escena.systems["mindar-image-system"];
 
         if (sistemaAR) {
-            sistemaAR.start();
+
+            console.log("MindAR encontrado.");
+
+            mensaje.innerText =
+                "Listo para iniciar.";
+
         } else {
-            console.error("No se encontró el sistema MindAR");
+
+            console.error(
+                "No se encontró el sistema MindAR."
+            );
+
+            mensaje.innerText =
+                "Error al cargar MindAR.";
+
         }
 
     });
 
 
-    // Cuando la imagen es encontrada
-    const objetivo = document.getElementById("objetivo");
 
-    objetivo.addEventListener("targetFound", function () {
+    /*
+    ==========================================
+    BOTÓN INICIAR
+    ==========================================
+    */
 
-        console.log("¡IMAGEN ENCONTRADA!");
+    botonIniciar.addEventListener(
+        "click",
+        async function () {
 
-    });
+            console.log(
+                "Botón INICIAR presionado."
+            );
 
 
-    // Cuando la imagen deja de verse
-    objetivo.addEventListener("targetLost", function () {
+            if (!sistemaAR) {
 
-        console.log("Imagen perdida");
+                sistemaAR =
+                    escena.systems[
+                        "mindar-image-system"
+                    ];
 
-    });
+            }
+
+
+            if (!sistemaAR) {
+
+                mensaje.innerText =
+                    "No se pudo cargar la realidad aumentada.";
+
+                return;
+
+            }
+
+
+            try {
+
+                mensaje.innerText =
+                    "Solicitando cámara...";
+
+
+                await sistemaAR.start();
+
+
+                pantallaInicio.style.display =
+                    "none";
+
+
+                mensaje.innerText =
+                    "✓ Cámara activa · Buscando la imagen...";
+
+
+                console.log(
+                    "MindAR iniciado correctamente."
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Error al iniciar MindAR:",
+                    error
+                );
+
+
+                pantallaInicio.style.display =
+                    "flex";
+
+
+                mensaje.innerText =
+                    "❌ No se pudo iniciar la cámara.";
+
+            }
+
+        }
+    );
+
+
+
+    /*
+    ==========================================
+    MINDAR LISTO
+    ==========================================
+    */
+
+    escena.addEventListener(
+        "arReady",
+        function () {
+
+            console.log(
+                "MindAR está listo."
+            );
+
+            mensaje.innerText =
+                "✓ Cámara activa · Buscando la imagen...";
+
+        }
+    );
+
+
+
+    /*
+    ==========================================
+    ERROR DE MINDAR
+    ==========================================
+    */
+
+    escena.addEventListener(
+        "arError",
+        function (evento) {
+
+            console.error(
+                "Error de MindAR:",
+                evento
+            );
+
+            mensaje.innerText =
+                "❌ Error al iniciar la cámara.";
+
+        }
+    );
+
+
+
+    /*
+    ==========================================
+    IMAGEN RECONOCIDA
+    ==========================================
+    */
+
+    objetivo.addEventListener(
+        "targetFound",
+        function () {
+
+            console.log(
+                "¡¡¡IMAGEN RECONOCIDA!!!"
+            );
+
+
+            mensaje.innerText =
+                "🎉 ¡IMAGEN RECONOCIDA!";
+
+        }
+    );
+
+
+
+    /*
+    ==========================================
+    IMAGEN PERDIDA
+    ==========================================
+    */
+
+    objetivo.addEventListener(
+        "targetLost",
+        function () {
+
+            console.log(
+                "Imagen perdida."
+            );
+
+
+            mensaje.innerText =
+                "Buscando la imagen...";
+
+        }
+    );
 
 });

@@ -12,62 +12,20 @@
 
     <title>Sistemas y Organizaciones - Realidad Aumentada</title>
 
+
     <!-- A-FRAME -->
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
 
     <!-- MIND-AR -->
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
-    <style>
 
-        html,
-        body {
-
-            margin: 0;
-            width: 100%;
-            height: 100%;
-
-            overflow: hidden;
-
-            background: #000;
-
-        }
-
-        a-scene {
-
-            width: 100%;
-            height: 100%;
-
-        }
-
-        #mensaje {
-
-            position: fixed;
-
-            top: 20px;
-            left: 50%;
-
-            transform: translateX(-50%);
-
-            z-index: 9999;
-
-            background: rgba(0,0,0,0.75);
-
-            color: white;
-
-            padding: 14px 22px;
-
-            border-radius: 12px;
-
-            font-family: Arial, sans-serif;
-
-            text-align: center;
-
-            font-size: 16px;
-
-        }
-
-    </style>
+    <!-- NUESTRO CSS -->
+    <link
+        rel="stylesheet"
+        href="vista/estilo/estilo.css"
+    >
 
 </head>
 
@@ -75,803 +33,559 @@
 <body>
 
 
-<div id="mensaje">
+    <!-- MENSAJE DE ESTADO -->
 
-    Preparando realidad aumentada...
-
-</div>
-
-
-
-<a-scene
-
-    mindar-image="
-        imageTargetSrc: ./targets.mind;
-        autoStart: true;
-    "
-
-    color-space="sRGB"
-
-    renderer="
-        colorManagement: true;
-        physicallyCorrectLights;
-    "
-
-    vr-mode-ui="enabled: false"
-
-    device-orientation-permission-ui="enabled: false"
-
-    embedded
->
+    <div id="mensaje">
+        Preparando realidad aumentada...
+    </div>
 
 
-    <!-- CÁMARA -->
+    <!-- PANTALLA INICIAL -->
 
-    <a-camera
-        position="0 0 0"
-        look-controls="enabled: false"
-    >
-    </a-camera>
+    <div id="inicio">
+
+        <div id="caja-inicio">
+
+            <h1>
+                Realidad Aumentada
+            </h1>
+
+            <p>
+                Presioná INICIAR y apuntá la cámara
+                hacia la imagen de
+                <strong>Sistemas y Organizaciones</strong>.
+            </p>
+
+            <button id="iniciar">
+                INICIAR
+            </button>
+
+        </div>
+
+    </div>
 
 
 
-    <!-- ILUMINACIÓN -->
+    <!-- ========================================= -->
+    <!-- ESCENA DE REALIDAD AUMENTADA -->
+    <!-- ========================================= -->
 
-    <a-light
-        type="ambient"
-        intensity="1.5"
-    >
-    </a-light>
+    <a-scene
 
+        mindar-image="
+            imageTargetSrc: ./targets.mind;
+            autoStart: false;
+        "
 
-    <a-light
-        type="directional"
-        intensity="2"
-        position="1 2 2"
-    >
-    </a-light>
+        color-space="sRGB"
 
+        renderer="
+            colorManagement: true;
+            physicallyCorrectLights;
+        "
 
+        vr-mode-ui="enabled: false"
 
-    <!-- ===================================== -->
-    <!-- IMAGEN OBJETIVO -->
-    <!-- ===================================== -->
+        device-orientation-permission-ui="enabled: false"
 
-    <a-entity
-        id="objetivo"
-        mindar-image-target="targetIndex: 0"
+        embedded
     >
 
 
+        <!-- CÁMARA -->
 
-        <!-- ================================= -->
-        <!-- PANEL CENTRAL -->
-        <!-- ================================= -->
-
-        <a-box
-
-            position="0 0 0.20"
-
-            width="0.45"
-            height="0.28"
-            depth="0.16"
-
-            color="#2563eb"
-
-            animation="
-                property: rotation;
-                to: 0 360 0;
-                loop: true;
-                dur: 9000;
-                easing: linear;
-            "
+        <a-camera
+            position="0 0 0"
+            look-controls="enabled: false"
         >
-        </a-box>
+        </a-camera>
 
 
-        <a-text
 
-            value="SISTEMA"
+        <!-- ILUMINACIÓN -->
 
-            align="center"
-
-            color="#ffffff"
-
-            width="1.4"
-
-            position="0 0 0.31"
-
-            rotation="-90 0 0"
+        <a-light
+            type="ambient"
+            intensity="1.5"
         >
-        </a-text>
+        </a-light>
+
+
+        <a-light
+            type="directional"
+            intensity="2"
+            position="1 2 2"
+        >
+        </a-light>
 
 
 
-        <!-- ================================= -->
-        <!-- RRHH -->
-        <!-- ================================= -->
+        <!-- ===================================== -->
+        <!-- IMAGEN OBJETIVO -->
+        <!-- ===================================== -->
 
         <a-entity
-
-            position="-0.55 0.30 0.18"
-
+            id="objetivo"
+            mindar-image-target="targetIndex: 0"
         >
 
 
-            <!-- CABEZA -->
-
-            <a-sphere
-
-                position="0 0.15 0"
-
-                radius="0.07"
-
-                color="#f4c2a1"
-
-            >
-            </a-sphere>
-
-
-            <!-- CUERPO -->
-
-            <a-cylinder
-
-                position="0 0 0"
-
-                radius="0.09"
-
-                height="0.18"
-
-                color="#3b82f6"
-
-            >
-            </a-cylinder>
-
-
-            <!-- BASE -->
-
-            <a-cylinder
-
-                position="0 -0.13 0"
-
-                radius="0.14"
-
-                height="0.04"
-
-                color="#1e3a8a"
-
-            >
-            </a-cylinder>
-
-
-            <a-text
-
-                value="RRHH"
-
-                align="center"
-
-                color="#ffffff"
-
-                width="1.1"
-
-                position="0 -0.25 0"
-
-            >
-            </a-text>
-
-
-        </a-entity>
-
-
-
-        <!-- ================================= -->
-        <!-- ADMINISTRACIÓN -->
-        <!-- ================================= -->
-
-        <a-entity
-
-            position="0.55 0.30 0.18"
-
-        >
-
-
-            <!-- EDIFICIO -->
-
-            <a-box
-
-                position="0 0.05 0"
-
-                width="0.28"
-
-                height="0.40"
-
-                depth="0.20"
-
-                color="#64748b"
-
-            >
-            </a-box>
-
-
-            <!-- TECHO -->
-
-            <a-cone
-
-                position="0 0.30 0"
-
-                radius-bottom="0.24"
-
-                radius-top="0"
-
-                height="0.16"
-
-                color="#334155"
-
-            >
-            </a-cone>
-
-
-            <!-- VENTANAS -->
-
-            <a-box
-                position="-0.07 0.10 0.105"
-                width="0.05"
-                height="0.07"
-                depth="0.01"
-                color="#38bdf8">
-            </a-box>
-
-
-            <a-box
-                position="0.07 0.10 0.105"
-                width="0.05"
-                height="0.07"
-                depth="0.01"
-                color="#38bdf8">
-            </a-box>
-
-
-            <a-text
-
-                value="ADMIN"
-
-                align="center"
-
-                color="#ffffff"
-
-                width="1"
-
-                position="0 -0.22 0"
-
-            >
-            </a-text>
-
-
-        </a-entity>
-
-
-
-        <!-- ================================= -->
-        <!-- BASE DE DATOS -->
-        <!-- ================================= -->
-
-        <a-entity
-
-            position="-0.55 -0.35 0.18"
-
-        >
-
-
-            <!-- DISCOS -->
-
-            <a-cylinder
-
-                position="0 0.14 0"
-
-                radius="0.16"
-
-                height="0.08"
-
-                color="#8b5cf6"
-
-            >
-            </a-cylinder>
-
-
-            <a-cylinder
-
-                position="0 0.05 0"
-
-                radius="0.16"
-
-                height="0.08"
-
-                color="#7c3aed"
-
-            >
-            </a-cylinder>
-
-
-            <a-cylinder
-
-                position="0 -0.04 0"
-
-                radius="0.16"
-
-                height="0.08"
-
-                color="#6d28d9"
-
-            >
-            </a-cylinder>
-
-
-            <a-text
-
-                value="BASE DE DATOS"
-
-                align="center"
-
-                color="#ffffff"
-
-                width="1"
-
-                position="0 -0.20 0"
-
-            >
-            </a-text>
-
-
-        </a-entity>
-
-
-
-        <!-- ================================= -->
-        <!-- EXISTENCIAS -->
-        <!-- ================================= -->
-
-        <a-entity
-
-            position="0.55 -0.35 0.18"
-
-        >
-
-
-            <!-- CAJA 1 -->
-
-            <a-box
-
-                position="-0.09 0.05 0"
-
-                width="0.16"
-
-                height="0.16"
-
-                depth="0.16"
-
-                color="#f59e0b"
-
-            >
-            </a-box>
-
-
-            <!-- CAJA 2 -->
-
-            <a-box
-
-                position="0.09 0.05 0"
-
-                width="0.16"
-
-                height="0.16"
-
-                depth="0.16"
-
-                color="#d97706"
-
-            >
-            </a-box>
-
-
-            <!-- CAJA 3 -->
-
-            <a-box
-
-                position="0 0.21 0"
-
-                width="0.16"
-
-                height="0.16"
-
-                depth="0.16"
-
-                color="#fbbf24"
-
-            >
-            </a-box>
-
-
-            <a-text
-
-                value="EXISTENCIAS"
-
-                align="center"
-
-                color="#ffffff"
-
-                width="1"
-
-                position="0 -0.16 0"
-
-            >
-            </a-text>
-
-
-        </a-entity>
-
-
-
-        <!-- ================================= -->
-        <!-- VENTAS -->
-        <!-- ================================= -->
-
-        <a-entity
-
-            position="0.75 0 0.18"
-
-        >
-
-
-            <!-- LOCAL -->
-
-            <a-box
-
-                position="0 0.10 0"
-
-                width="0.32"
-
-                height="0.25"
-
-                depth="0.20"
-
-                color="#10b981"
-
-            >
-            </a-box>
-
-
-            <!-- TECHO -->
-
-            <a-box
-
-                position="0 0.25 0"
-
-                width="0.38"
-
-                height="0.06"
-
-                depth="0.25"
-
-                color="#047857"
-
-            >
-            </a-box>
-
-
-            <!-- PUERTA -->
-
-            <a-box
-
-                position="0 0.05 0.105"
-
-                width="0.10"
-
-                height="0.15"
-
-                depth="0.02"
-
-                color="#064e3b"
-
-            >
-            </a-box>
-
-
-            <a-text
-
-                value="VENTAS"
-
-                align="center"
-
-                color="#ffffff"
-
-                width="1"
-
-                position="0 -0.12 0"
-
-            >
-            </a-text>
-
-
-        </a-entity>
-
-
-
-        <!-- ================================= -->
-        <!-- DECISIONES -->
-        <!-- ================================= -->
-
-        <a-entity
-
-            position="-0.75 0 0.18"
-
-        >
-
-
-            <!-- CEREBRO -->
-
-            <a-sphere
-
-                radius="0.16"
-
-                color="#ec4899"
-
+            <!-- ================================= -->
+            <!-- SISTEMA CENTRAL -->
+            <!-- ================================= -->
+
+            <a-entity
+                id="sistema-central"
+                position="0 0 0.20"
             >
 
-                <a-animation
+                <a-box
+                    width="0.45"
+                    height="0.28"
+                    depth="0.18"
+                    color="#2563eb"
 
-                    attribute="scale"
-
-                    from="1 1 1"
-
-                    to="1.15 1.15 1.15"
-
-                    direction="alternate"
-
-                    dur="1200"
-
-                    repeat="indefinite"
-
+                    animation="
+                        property: rotation;
+                        to: 0 360 0;
+                        loop: true;
+                        dur: 9000;
+                        easing: linear;
+                    "
                 >
-                </a-animation>
-
-            </a-sphere>
+                </a-box>
 
 
-            <a-text
+                <a-text
+                    value="SISTEMA"
+                    align="center"
+                    color="#ffffff"
+                    width="1.4"
+                    position="0 0 0.12"
+                    rotation="0 0 0"
+                >
+                </a-text>
 
-                value="DECISIONES"
+            </a-entity>
 
-                align="center"
 
-                color="#ffffff"
 
-                width="1"
+            <!-- ================================= -->
+            <!-- RRHH -->
+            <!-- ================================= -->
 
-                position="0 -0.23 0"
-
+            <a-entity
+                position="-0.55 0.30 0.18"
             >
-            </a-text>
+
+                <!-- CABEZA -->
+
+                <a-sphere
+                    position="0 0.15 0"
+                    radius="0.07"
+                    color="#f4c2a1"
+                >
+                </a-sphere>
+
+
+                <!-- CUERPO -->
+
+                <a-cylinder
+                    position="0 0 0"
+                    radius="0.09"
+                    height="0.18"
+                    color="#3b82f6"
+                >
+                </a-cylinder>
+
+
+                <!-- BASE -->
+
+                <a-cylinder
+                    position="0 -0.13 0"
+                    radius="0.14"
+                    height="0.04"
+                    color="#1e3a8a"
+                >
+                </a-cylinder>
+
+
+                <a-text
+                    value="RRHH"
+                    align="center"
+                    color="#ffffff"
+                    width="1.1"
+                    position="0 -0.25 0"
+                >
+                </a-text>
+
+            </a-entity>
+
+
+
+            <!-- ================================= -->
+            <!-- ADMINISTRACIÓN -->
+            <!-- ================================= -->
+
+            <a-entity
+                position="0.55 0.30 0.18"
+            >
+
+                <!-- EDIFICIO -->
+
+                <a-box
+                    position="0 0.05 0"
+                    width="0.28"
+                    height="0.40"
+                    depth="0.20"
+                    color="#64748b"
+                >
+                </a-box>
+
+
+                <!-- TECHO -->
+
+                <a-cone
+                    position="0 0.30 0"
+                    radius-bottom="0.24"
+                    radius-top="0"
+                    height="0.16"
+                    color="#334155"
+                >
+                </a-cone>
+
+
+                <!-- VENTANAS -->
+
+                <a-box
+                    position="-0.07 0.10 0.105"
+                    width="0.05"
+                    height="0.07"
+                    depth="0.01"
+                    color="#38bdf8"
+                >
+                </a-box>
+
+
+                <a-box
+                    position="0.07 0.10 0.105"
+                    width="0.05"
+                    height="0.07"
+                    depth="0.01"
+                    color="#38bdf8"
+                >
+                </a-box>
+
+
+                <a-text
+                    value="ADMINISTRACION"
+                    align="center"
+                    color="#ffffff"
+                    width="1"
+                    position="0 -0.22 0"
+                >
+                </a-text>
+
+            </a-entity>
+
+
+
+            <!-- ================================= -->
+            <!-- BASE DE DATOS -->
+            <!-- ================================= -->
+
+            <a-entity
+                position="-0.55 -0.35 0.18"
+            >
+
+                <a-cylinder
+                    position="0 0.14 0"
+                    radius="0.16"
+                    height="0.08"
+                    color="#8b5cf6"
+                >
+                </a-cylinder>
+
+
+                <a-cylinder
+                    position="0 0.05 0"
+                    radius="0.16"
+                    height="0.08"
+                    color="#7c3aed"
+                >
+                </a-cylinder>
+
+
+                <a-cylinder
+                    position="0 -0.04 0"
+                    radius="0.16"
+                    height="0.08"
+                    color="#6d28d9"
+                >
+                </a-cylinder>
+
+
+                <a-text
+                    value="BASE DE DATOS"
+                    align="center"
+                    color="#ffffff"
+                    width="1"
+                    position="0 -0.20 0"
+                >
+                </a-text>
+
+            </a-entity>
+
+
+
+            <!-- ================================= -->
+            <!-- EXISTENCIAS -->
+            <!-- ================================= -->
+
+            <a-entity
+                position="0.55 -0.35 0.18"
+            >
+
+                <a-box
+                    position="-0.09 0.05 0"
+                    width="0.16"
+                    height="0.16"
+                    depth="0.16"
+                    color="#f59e0b"
+                >
+                </a-box>
+
+
+                <a-box
+                    position="0.09 0.05 0"
+                    width="0.16"
+                    height="0.16"
+                    depth="0.16"
+                    color="#d97706"
+                >
+                </a-box>
+
+
+                <a-box
+                    position="0 0.21 0"
+                    width="0.16"
+                    height="0.16"
+                    depth="0.16"
+                    color="#fbbf24"
+                >
+                </a-box>
+
+
+                <a-text
+                    value="EXISTENCIAS"
+                    align="center"
+                    color="#ffffff"
+                    width="1"
+                    position="0 -0.16 0"
+                >
+                </a-text>
+
+            </a-entity>
+
+
+
+            <!-- ================================= -->
+            <!-- VENTAS -->
+            <!-- ================================= -->
+
+            <a-entity
+                position="0.75 0 0.18"
+            >
+
+                <a-box
+                    position="0 0.10 0"
+                    width="0.32"
+                    height="0.25"
+                    depth="0.20"
+                    color="#10b981"
+                >
+                </a-box>
+
+
+                <a-box
+                    position="0 0.25 0"
+                    width="0.38"
+                    height="0.06"
+                    depth="0.25"
+                    color="#047857"
+                >
+                </a-box>
+
+
+                <a-box
+                    position="0 0.05 0.105"
+                    width="0.10"
+                    height="0.15"
+                    depth="0.02"
+                    color="#064e3b"
+                >
+                </a-box>
+
+
+                <a-text
+                    value="VENTAS"
+                    align="center"
+                    color="#ffffff"
+                    width="1"
+                    position="0 -0.12 0"
+                >
+                </a-text>
+
+            </a-entity>
+
+
+
+            <!-- ================================= -->
+            <!-- DECISIONES -->
+            <!-- ================================= -->
+
+            <a-entity
+                position="-0.75 0 0.18"
+            >
+
+                <a-sphere
+                    radius="0.16"
+                    color="#ec4899"
+
+                    animation="
+                        property: scale;
+                        from: 1 1 1;
+                        to: 1.15 1.15 1.15;
+                        direction: alternate;
+                        dur: 1200;
+                        loop: true;
+                    "
+                >
+                </a-sphere>
+
+
+                <a-text
+                    value="DECISIONES"
+                    align="center"
+                    color="#ffffff"
+                    width="1"
+                    position="0 -0.23 0"
+                >
+                </a-text>
+
+            </a-entity>
+
+
+
+            <!-- ================================= -->
+            <!-- SISTEMA DE INFORMACION -->
+            <!-- ================================= -->
+
+            <a-entity
+                position="0 0.60 0.18"
+            >
+
+                <!-- MONITOR -->
+
+                <a-box
+                    position="0 0.10 0"
+                    width="0.38"
+                    height="0.25"
+                    depth="0.04"
+                    color="#111827"
+                >
+                </a-box>
+
+
+                <!-- PANTALLA -->
+
+                <a-plane
+                    position="0 0.10 0.025"
+                    width="0.30"
+                    height="0.17"
+                    color="#22d3ee"
+                >
+                </a-plane>
+
+
+                <!-- BASE -->
+
+                <a-box
+                    position="0 -0.07 0"
+                    width="0.25"
+                    height="0.03"
+                    depth="0.12"
+                    color="#374151"
+                >
+                </a-box>
+
+
+                <a-text
+                    value="SISTEMA DE INFORMACION"
+                    align="center"
+                    color="#ffffff"
+                    width="1"
+                    position="0 -0.18 0"
+                >
+                </a-text>
+
+            </a-entity>
+
+
+
+            <!-- ================================= -->
+            <!-- CONEXIONES -->
+            <!-- ================================= -->
+
+            <a-cylinder
+                position="-0.28 0.15 0.16"
+                radius="0.012"
+                height="0.50"
+                color="#38bdf8"
+                rotation="0 0 55"
+            >
+            </a-cylinder>
+
+
+            <a-cylinder
+                position="0.28 0.15 0.16"
+                radius="0.012"
+                height="0.50"
+                color="#38bdf8"
+                rotation="0 0 -55"
+            >
+            </a-cylinder>
+
+
+            <a-cylinder
+                position="-0.28 -0.15 0.16"
+                radius="0.012"
+                height="0.50"
+                color="#38bdf8"
+                rotation="0 0 -55"
+            >
+            </a-cylinder>
+
+
+            <a-cylinder
+                position="0.28 -0.15 0.16"
+                radius="0.012"
+                height="0.50"
+                color="#38bdf8"
+                rotation="0 0 55"
+            >
+            </a-cylinder>
 
 
         </a-entity>
 
 
+    </a-scene>
 
-        <!-- ================================= -->
-        <!-- COMPUTADORA -->
-        <!-- ================================= -->
 
-        <a-entity
+    <!-- NUESTRO JAVASCRIPT -->
 
-            position="0 0.60 0.18"
-
-        >
-
-
-            <!-- MONITOR -->
-
-            <a-box
-
-                position="0 0.10 0"
-
-                width="0.38"
-
-                height="0.25"
-
-                depth="0.04"
-
-                color="#111827"
-
-            >
-            </a-box>
-
-
-            <!-- PANTALLA -->
-
-            <a-plane
-
-                position="0 0.10 0.025"
-
-                width="0.30"
-
-                height="0.17"
-
-                color="#22d3ee"
-
-            >
-            </a-plane>
-
-
-            <!-- BASE -->
-
-            <a-box
-
-                position="0 -0.07 0"
-
-                width="0.25"
-
-                height="0.03"
-
-                depth="0.12"
-
-                color="#374151"
-
-            >
-            </a-box>
-
-
-            <a-text
-
-                value="SISTEMA DE INFORMACION"
-
-                align="center"
-
-                color="#ffffff"
-
-                width="1"
-
-                position="0 -0.18 0"
-
-            >
-            </a-text>
-
-
-        </a-entity>
-
-
-
-        <!-- ================================= -->
-        <!-- CONEXIONES -->
-        <!-- ================================= -->
-
-        <a-cylinder
-
-            position="-0.28 0.15 0.16"
-
-            radius="0.012"
-
-            height="0.50"
-
-            color="#38bdf8"
-
-            rotation="0 0 55"
-
-        >
-        </a-cylinder>
-
-
-        <a-cylinder
-
-            position="0.28 0.15 0.16"
-
-            radius="0.012"
-
-            height="0.50"
-
-            color="#38bdf8"
-
-            rotation="0 0 -55"
-
-        >
-        </a-cylinder>
-
-
-        <a-cylinder
-
-            position="-0.28 -0.15 0.16"
-
-            radius="0.012"
-
-            height="0.50"
-
-            color="#38bdf8"
-
-            rotation="0 0 -55"
-
-        >
-        </a-cylinder>
-
-
-        <a-cylinder
-
-            position="0.28 -0.15 0.16"
-
-            radius="0.012"
-
-            height="0.50"
-
-            color="#38bdf8"
-
-            rotation="0 0 55"
-
-        >
-        </a-cylinder>
-
-
-
-    </a-entity>
-
-</a-scene>
-
-
-
-<script>
-
-const escena =
-    document.querySelector("a-scene");
-
-const mensaje =
-    document.getElementById("mensaje");
-
-
-escena.addEventListener(
-    "arReady",
-    function () {
-
-        mensaje.innerText =
-            "✓ Cámara activa · Buscando la imagen...";
-
-    }
-);
-
-
-escena.addEventListener(
-    "arError",
-    function () {
-
-        mensaje.innerText =
-            "❌ No se pudo iniciar la cámara.";
-
-    }
-);
-
-
-document
-    .querySelector("[mindar-image-target]")
-    .addEventListener(
-        "targetFound",
-        function () {
-
-            mensaje.innerText =
-                "🎉 ¡IMAGEN RECONOCIDA!";
-
-        }
-    );
-
-
-document
-    .querySelector("[mindar-image-target]")
-    .addEventListener(
-        "targetLost",
-        function () {
-
-            mensaje.innerText =
-                "Buscando la imagen...";
-
-        }
-    );
-
-</script>
+    <script src="operadores/script.js"></script>
 
 
 </body>

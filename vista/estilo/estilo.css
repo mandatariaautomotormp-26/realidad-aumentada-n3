@@ -1,28 +1,38 @@
-/* ==============================
+/* =========================================
    CONFIGURACIÓN GENERAL
-   ============================== */
+   ========================================= */
 
 * {
     box-sizing: border-box;
 }
 
+
 html,
 body {
+
     margin: 0;
     padding: 0;
+
     width: 100%;
     height: 100%;
+
     overflow: hidden;
+
     font-family: Arial, sans-serif;
+
+    background: #000;
 }
 
 
-/* ==============================
-   ESCENA DE REALIDAD AUMENTADA
-   ============================== */
+
+/* =========================================
+   ESCENA AR
+   ========================================= */
 
 a-scene {
+
     position: fixed;
+
     top: 0;
     left: 0;
 
@@ -30,92 +40,143 @@ a-scene {
     height: 100%;
 
     z-index: 1;
+
 }
 
 
-/* ==============================
-   PANTALLA DE INICIO
-   ============================== */
 
-#pantalla-inicio {
+/* =========================================
+   MENSAJE SUPERIOR
+   ========================================= */
+
+#mensaje {
+
     position: fixed;
 
-    top: 0;
-    left: 0;
+    top: 20px;
+    left: 50%;
 
-    width: 100%;
-    height: 100%;
+    transform: translateX(-50%);
 
-    z-index: 10;
+    z-index: 9999;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 14px 22px;
 
-    background: #111827;
-}
+    border-radius: 12px;
 
+    background: rgba(0, 0, 0, 0.75);
 
-/* ==============================
-   CAJA DE INICIO
-   ============================== */
+    color: white;
 
-#caja-inicio {
-    width: 90%;
-    max-width: 420px;
-
-    padding: 35px 25px;
+    font-size: 16px;
 
     text-align: center;
 
+    white-space: nowrap;
+
+}
+
+
+
+/* =========================================
+   PANTALLA DE INICIO
+   ========================================= */
+
+#inicio {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 10000;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+
+    background: #111827;
+
+}
+
+
+
+/* =========================================
+   CAJA DE INICIO
+   ========================================= */
+
+#caja-inicio {
+
+    width: 90%;
+
+    max-width: 400px;
+
+    padding: 32px 25px;
+
     border-radius: 20px;
 
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.97);
+
+    text-align: center;
 
     box-shadow:
-        0 15px 40px rgba(0, 0, 0, 0.35);
+        0 15px 40px rgba(0, 0, 0, 0.4);
+
 }
 
 
-/* ==============================
+
+/* =========================================
    TÍTULO
-   ============================== */
+   ========================================= */
 
 #caja-inicio h1 {
+
     margin-top: 0;
+
     margin-bottom: 15px;
 
-    font-size: 32px;
+    font-size: 30px;
 
     color: #111827;
+
 }
 
 
-/* ==============================
+
+/* =========================================
    TEXTO
-   ============================== */
+   ========================================= */
 
 #caja-inicio p {
-    margin-bottom: 30px;
 
-    font-size: 17px;
+    margin-bottom: 25px;
+
+    font-size: 16px;
 
     line-height: 1.5;
 
     color: #374151;
+
 }
 
 
-/* ==============================
+
+/* =========================================
    BOTÓN
-   ============================== */
+   ========================================= */
 
 #iniciar {
+
     width: 100%;
 
     padding: 16px;
 
     border: none;
+
     border-radius: 12px;
 
     background: #2563eb;
@@ -123,38 +184,64 @@ a-scene {
     color: white;
 
     font-size: 18px;
+
     font-weight: bold;
 
     cursor: pointer;
+
 }
 
 
-/* ==============================
+
+/* =========================================
    EFECTO DEL BOTÓN
-   ============================== */
+   ========================================= */
 
 #iniciar:active {
+
     transform: scale(0.97);
+
 }
 
 
-/* ==============================
-   COMPATIBILIDAD CON CELULARES
-   ============================== */
+
+/* =========================================
+   CELULARES
+   ========================================= */
 
 @media (max-width: 600px) {
 
     #caja-inicio {
+
         width: 92%;
-        padding: 30px 20px;
+
+        padding: 28px 20px;
+
     }
+
 
     #caja-inicio h1 {
-        font-size: 28px;
+
+        font-size: 27px;
+
     }
 
+
     #caja-inicio p {
-        font-size: 16px;
+
+        font-size: 15px;
+
+    }
+
+
+    #mensaje {
+
+        max-width: 90%;
+
+        white-space: normal;
+
+        font-size: 14px;
+
     }
 
 }
